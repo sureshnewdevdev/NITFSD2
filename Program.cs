@@ -4,16 +4,22 @@ namespace NITFSD2
 {
     internal class Program
     {
-
+         static int result = 0;
         public delegate int MyDelegateFunction(int first, int second);
+        public static event MyDelegateFunction MyEvent;
+        static int[] anwser = new int[3];
         public static void DoWork()
         {
-            MyDelegateFunction myFunction = new MyDelegateFunction(Add);
+            MyEvent += Program_MyEvent;
+            MyEvent(10, 90);
+            MyEvent += Program_MyEvent1;
+
+            MyDelegateFunction myFunction = new MyDelegateFunction(Subtract);
 
             var ans = myFunction(10, 90);
 
             MyDelegateFunction myFuntions=new MyDelegateFunction(Add);
-
+            
             myFuntions += Subtract;
             myFuntions += Multiply;
 
@@ -22,19 +28,47 @@ namespace NITFSD2
             Console.WriteLine("Answer = " + ans);
             Console.WriteLine("Answer = " + result);
 
+            Person p = new Person();
+            p.DisplayPerson();
         }
 
-        private static int Multiply(int first, int second)
+        private static int Program_Onclick(int first, int second)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static int Program_MyEvent1(int first, int second)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static int Program_MyEvent(int first, int second)
         {
             return first + second;
         }
+
+        public void DD()
+        {
+            
+        }
+        private static int Multiply(int first, int second)
+        {
+            result = first * second;
+            anwser[0] = result;
+            return first *second;
+        }
         private static int Add(int first, int second)
         {
+            result = first + second;
+            anwser[1] = result;
+
             return first + second;
         }
 
         private static int Subtract(int first, int second)
         {
+            anwser[2] = result;
+
             return first + second;
         }
         static void Main(string[] args)
